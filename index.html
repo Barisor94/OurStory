@@ -224,18 +224,26 @@
 
 .guestbook input,
 .guestbook textarea{
-  width:90%;
-  max-width:500px;
-  margin:10px 0;
-  padding:15px;
-  border:none;
-  border-radius:12px;
-  background:#ffffff;
-  color:#6b4f3a;
-  font-size:16px;
+    width:90%;
+    max-width:500px;
+    margin:10px 0;
+    padding:15px;
+    border:2px solid #8b5e3c;
+    border-radius:12px;
+    background:#ffffff;
+    color:#6b4f3a;
+    font-size:16px;
+    transition:0.3s;
+}
 }
 
-.guestbook textarea{
+.guestbook textarea:focus,
+.guestbook input:focus{
+    outline:none;
+    border:2px solid #8b5e3c;
+    box-shadow:0 0 15px rgba(139,94,60,0.25);
+}
+  
   height:140px;
   resize:none;
 }
@@ -551,7 +559,7 @@ music.addEventListener("ended", () => {
 
   <input type="text" id="guest-name" placeholder="Your Name">
 
-  <textarea id="guest-message" placeholder="Leave your message"></textarea>
+  <textarea id="guest-message" placeholder="Write your wishes here..."></textarea>
 
   <button id="send-message">Send Message</button>
 
