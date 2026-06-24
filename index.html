@@ -387,7 +387,7 @@
   Fotoğraflarınızı Yükleyin
 </label>
 
-<input type="file" id="upload-photo" accept="image/jpeg,image/jpg,image/png">
+<input type="file" id="upload-photo" accept="image/jpeg,image/jpg,image/png" multiple>
   
 </div>
 
@@ -418,19 +418,21 @@ const gallery = document.getElementById("live-gallery");
 
 uploadInput.addEventListener("change", async (e) => {
 
-  const file = e.target.files[0];
+    const files = e.target.files;
 
-  if(!file) return;
-  
- 
+    if(!files.length) return;
 
-  const storageRef = ref(storage, `photos/${Date.now()}-${file.name}`);
+    for(const file of files){
 
-  await uploadBytes(storageRef, file);
+        const storageRef = ref(storage, `photos/${Date.now()}-${file.name}`);
 
-  alert("Photo uploaded ❤️");
+        await uploadBytes(storageRef, file);
 
-  loadGallery();
+    }
+
+    alert(`${files.length} fotoğraf yüklendi ❤️`);
+
+    loadGallery();
 
 });
 
