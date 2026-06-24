@@ -446,7 +446,7 @@ async function loadGallery(){
 
   gallery.innerHTML = "";
 
-  const listRef = ref(storage, "photos/");
+  const listRef = ref(storage, "photos");
   const res = await listAll(listRef);
 
   for(const item of res.items){
