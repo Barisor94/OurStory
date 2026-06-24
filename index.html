@@ -450,6 +450,7 @@ async function loadGallery(){
     }
 
     const url = await getDownloadURL(item);
+    console.log("DOSYA:", item.name);
 
     const img = document.createElement("img");
     img.src = url;
