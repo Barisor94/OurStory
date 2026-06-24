@@ -422,14 +422,7 @@ uploadInput.addEventListener("change", async (e) => {
 
   if(!file) return;
   
-  if (!["image/jpeg","image/jpg","image/png"].includes(file.type)) {
-    alert("Lütfen sadece JPG, JPEG veya PNG formatında fotoğraf yükleyin.");
-    return;
-}
-
-if (file.size > 10 * 1024 * 1024) {
-    alert("Fotoğraf boyutu 10 MB'dan büyük olamaz.");
-    return;
+ 
 }
 
   const storageRef = ref(storage, `photos/${Date.now()}-${file.name}`);
