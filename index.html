@@ -388,7 +388,7 @@
 </label>
 
 <input type="file" id="upload-photo" accept="image/jpeg,image/jpg,image/png" multiple>
-  
+  <p id="upload-status" style="font-size:14px; color:#8b5e3c; margin-top:10px;"></p>
 </div>
 
 <div id="live-gallery" style="display:flex; flex-wrap:wrap; justify-content:center;"></div>
@@ -416,9 +416,7 @@ const storage = getStorage(app);
 const uploadInput = document.getElementById("upload-photo");
 const gallery = document.getElementById("live-gallery");
 
-uploadInput.addEventListener("click", () => {
-    alert("Lütfen sadece JPG, JPEG veya PNG formatında fotoğraf yükleyin. DNG/RAW dosyaları desteklenmez.");
-});
+
 
 uploadInput.addEventListener("change", async (e) => {
 
@@ -427,7 +425,8 @@ uploadInput.addEventListener("change", async (e) => {
     if(!files.length) return;
 
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-
+    const uploadStatus = document.getElementById("upload-status");
+    uploadStatus.innerHTML = `⏳ ${files.length} fotoğraf yükleniyor, lütfen bekleyin...`;
     const wrongFiles = files.filter(file => !allowedTypes.includes(file.type));
 
     if(wrongFiles.length > 0){
@@ -443,7 +442,7 @@ uploadInput.addEventListener("change", async (e) => {
     );
 
     alert(`${files.length} fotoğraf yüklendi ❤️`);
-
+uploadStatus.innerHTML = `✅ ${files.length} fotoğraf başarıyla yüklendi ❤️`;
     loadGallery();
 
 });
