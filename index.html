@@ -416,11 +416,24 @@ const storage = getStorage(app);
 const uploadInput = document.getElementById("upload-photo");
 const gallery = document.getElementById("live-gallery");
 
+uploadInput.addEventListener("click", () => {
+    alert("Lütfen sadece JPG, JPEG veya PNG formatında fotoğraf yükleyin. DNG/RAW dosyaları desteklenmez.");
+});
+
 uploadInput.addEventListener("change", async (e) => {
 
     const files = Array.from(e.target.files);
 
     if(!files.length) return;
+
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+    const wrongFiles = files.filter(file => !allowedTypes.includes(file.type));
+
+    if(wrongFiles.length > 0){
+        alert("DNG/RAW desteklenmiyor. Lütfen sadece JPG, JPEG veya PNG fotoğraf seçin.");
+        return;
+    }
 
     await Promise.all(
         files.map((file) => {
