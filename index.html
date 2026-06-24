@@ -387,8 +387,8 @@
   Fotoğraflarınızı Yükleyin
 </label>
 
-<input type="file" id="upload-photo" hidden>
-
+<input type="file" id="photo-upload" accept="image/jpeg,image/jpg,image/png">
+  
 </div>
 
 <div id="live-gallery" style="display:flex; flex-wrap:wrap; justify-content:center;"></div>
@@ -421,6 +421,16 @@ uploadInput.addEventListener("change", async (e) => {
   const file = e.target.files[0];
 
   if(!file) return;
+  
+  if (!["image/jpeg","image/jpg","image/png"].includes(file.type)) {
+    alert("Lütfen sadece JPG, JPEG veya PNG formatında fotoğraf yükleyin.");
+    return;
+}
+
+if (file.size > 10 * 1024 * 1024) {
+    alert("Fotoğraf boyutu 10 MB'dan büyük olamaz.");
+    return;
+}
 
   const storageRef = ref(storage, `photos/${Date.now()}-${file.name}`);
 
