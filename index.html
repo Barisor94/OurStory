@@ -418,17 +418,16 @@ const gallery = document.getElementById("live-gallery");
 
 uploadInput.addEventListener("change", async (e) => {
 
-    const files = e.target.files;
+    const files = Array.from(e.target.files);
 
     if(!files.length) return;
 
-    for(const file of files){
-
-        const storageRef = ref(storage, `photos/${Date.now()}-${file.name}`);
-
-        await uploadBytes(storageRef, file);
-
-    }
+    await Promise.all(
+        files.map((file) => {
+            const storageRef = ref(storage, `photos/${Date.now()}-${file.name}`);
+            return uploadBytes(storageRef, file);
+        })
+    );
 
     alert(`${files.length} fotoğraf yüklendi ❤️`);
 
