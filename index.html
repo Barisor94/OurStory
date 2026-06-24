@@ -451,6 +451,13 @@ async function loadGallery(){
   const res = await listAll(listRef);
 
   for(const item of res.items){
+    if(
+  !item.name.toLowerCase().endsWith(".jpg") &&
+  !item.name.toLowerCase().endsWith(".jpeg") &&
+  !item.name.toLowerCase().endsWith(".png")
+){
+  continue;
+}
 
     const url = await getDownloadURL(item);
 
