@@ -426,13 +426,13 @@ uploadInput.addEventListener("change", async (e) => {
 
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
     const uploadStatus = document.getElementById("upload-status");
-    uploadStatus.innerHTML = `⏳ ${files.length} fotoğraf yükleniyor, lütfen bekleyin...`;
     const wrongFiles = files.filter(file => !allowedTypes.includes(file.type));
-
     if(wrongFiles.length > 0){
         alert("DNG/RAW desteklenmiyor. Lütfen sadece JPG, JPEG veya PNG fotoğraf seçin.");
         return;
+
     }
+      uploadStatus.innerHTML = `⏳ ${files.length} fotoğraf yükleniyor, lütfen bekleyin...`;
 
     await Promise.all(
         files.map((file) => {
