@@ -446,23 +446,20 @@ async function loadGallery(){
 
   gallery.innerHTML = "";
 
-  const listRef = ref(storage, 'photos');
-
+  const listRef = ref(storage, "photos/");
   const res = await listAll(listRef);
 
   for(const item of res.items){
-    if(
-  !item.name.toLowerCase().endsWith(".jpg") &&
-  !item.name.toLowerCase().endsWith(".jpeg") &&
-  !item.name.toLowerCase().endsWith(".png")
-){
-  continue;
-}
+
+    const name = item.name.toLowerCase();
+
+    if(!name.endsWith(".jpg") && !name.endsWith(".jpeg") && !name.endsWith(".png")){
+      continue;
+    }
 
     const url = await getDownloadURL(item);
 
     const img = document.createElement("img");
-
     img.src = url;
 
     img.style.width = "250px";
@@ -470,45 +467,47 @@ async function loadGallery(){
     img.style.objectFit = "cover";
     img.style.borderRadius = "20px";
     img.style.margin = "10px";
-img.onclick = () => {
 
-  const overlay = document.createElement("div");
+    img.onerror = () => {
+      img.remove();
+    };
 
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.background = "rgba(0,0,0,0.9)";
-  overlay.style.display = "flex";
-  overlay.style.alignItems = "center";
-  overlay.style.justifyContent = "center";
-  overlay.style.zIndex = "9999";
+    img.onclick = () => {
 
-  const bigImg = document.createElement("img");
+      const overlay = document.createElement("div");
 
-  bigImg.src = url;
-  bigImg.style.maxWidth = "90%";
-  bigImg.style.maxHeight = "90%";
-  bigImg.style.borderRadius = "20px";
+      overlay.style.position = "fixed";
+      overlay.style.top = "0";
+      overlay.style.left = "0";
+      overlay.style.width = "100%";
+      overlay.style.height = "100%";
+      overlay.style.background = "rgba(0,0,0,0.9)";
+      overlay.style.display = "flex";
+      overlay.style.alignItems = "center";
+      overlay.style.justifyContent = "center";
+      overlay.style.zIndex = "9999";
 
-  overlay.appendChild(bigImg);
+      const bigImg = document.createElement("img");
 
-  overlay.onclick = () => {
-    overlay.remove();
-  };
+      bigImg.src = url;
+      bigImg.style.maxWidth = "90%";
+      bigImg.style.maxHeight = "90%";
+      bigImg.style.borderRadius = "20px";
 
-  document.body.appendChild(overlay);
+      overlay.appendChild(bigImg);
 
-};
+      overlay.onclick = () => {
+        overlay.remove();
+      };
+
+      document.body.appendChild(overlay);
+    };
+
     gallery.appendChild(img);
-
   }
-
 }
 
 loadGallery();
-
 </script>
  
 <audio id="bg-music"></audio>
